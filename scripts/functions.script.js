@@ -1,1 +1,146 @@
-<script language=javascript>document.write(unescape('%0A//%20exports%20%7BrandomNum%28min.max%29%2C%20fire%28event%29%2C%20aiming%28event%29%2C%20enemiesgenerator%28enemiesFlow%29%7D%0A%0Aconst%20fail%20%3D%20document.getElementById%28%27fail%27%29%3B%0Afail.play%28%29%3B%0A%0A%0Aconst%20player%20%3D%20document.getElementById%28%27player%27%29%3B%0Aconst%20rotator%20%3D%20document.getElementById%28%27rotator%27%29%3B%0Aconst%20bullet%20%3D%20document.getElementById%28%27bullet%27%29%3B%0Aconst%20soundTruck%20%3D%20document.getElementById%28%27soundTruck%27%29%3B%0Aconst%20shoot%20%3D%20document.getElementById%28%27shoot%27%29%3B%0Alet%20x%20%3D%200%3B%0Alet%20y%20%3D%200%3B%0Aconst%20noCollide%20%3D%20%27%uD83D%uDE80%27%3B%0Aconst%20collide%20%3D%20%27%uD83D%uDCA5%27%3B%0Abullet.textContent%20%3D%20noCollide%3B%0A%0A//%20Generate%20a%20random%20number%20between%20min%20-%201%20and%20max%20+%201%0Aexport%20function%20randomNum%28min%2C%20max%29%20%7B%0A%0A%20%20%20%20return%20Math.floor%28Math.random%28%29%20*%20%28max%20-%20min%20+%201%29%29%20+%20min%3B%0A%7D%0A%0A//%20Animation%20of%20the%20bullet%20firing%0Aexport%20function%20fire%28event%29%7B%20shoot.play%28%29%3B%0A%20%20%20%20player.style.left%20%3D%20event.x%20+%20%27px%27%3B%0A%20%20%20%20player.style.top%20%3D%20event.y%20+%20%27px%27%3B%0A%20%20%20%20player.style.transform%20%3D%20%27translate%28-50%25%2C%20-10%25%29%27%3B%0A%20%20%20%20player.style.transition%20%3D%20%270.3s%27%3B%0A%20%20%20%20setTimeout%28%28%29%20%3D%3E%20%7B%0A%20%20%20%20bullet.style.overflow%20%3D%20%27visible%27%3B%0A%20%20%20%20bullet.textContent%20%3D%20collide%3B%0A%20%20%20%20%7D%2C%20270%29%3B%0A%20%20%20%20setTimeout%28%28%29%20%3D%3E%20%7B%0A%20%20%20%20player.style.transition%20%3D%20%270s%27%3B%0A%20%20%20%20bullet.style.overflow%20%3D%20%27hidden%27%3B%0A%20%20%20%20bullet.textContent%20%3D%20%27%27%3B%0A%20%20%20%20player.style.left%20%3D%20%2750%25%27%3B%0A%20%20%20%20player.style.top%20%3D%20%27100%25%27%3B%0A%20%20%20%20player.style.transform%20%3D%20%27translate%28-50%25%2C%20-130%25%29%27%3B%0A%20%20%20%20%7D%2C%20300%29%3B%0A%20%20%20%20setTimeout%28%28%29%20%3D%3E%20%7B%0A%20%20%20%20%20%20%20%20bullet.textContent%20%3D%20noCollide%3B%0A%20%20%20%20%20%20%20%20shoot.pause%28%29%3B%0A%20%20%20%20%20%20%20%20shoot.currentTime%20%3D%200%3B%0A%20%20%20%20%7D%2C%20500%29%3B%7D%0A//%20Animation%20of%20the%20bullet%20aiming%0Aexport%20function%20aiming%28event%29%7B%0A%20%20%20%20const%20xdis%20%3D%20event.x%20-%20window.innerWidth/2%3B%0A%20%20%20%20const%20ydis%20%3D%20window.innerHeight%20*%2095%20/%20100%20-%20event.y%3B%0A%20%20%20%20const%20degree%20%3D%20%28Math.atan%28xdis/ydis%29%20*%20180%20/%20Math.PI%29%3B%0A%20%20%20%20rotator.style.transform%20%3D%20%60rotate%28%24%7Bdegree%7Ddeg%29%60%3B%0A%7D%0A%0A%0A%0A%0A//%20Generate%20enemies%0A%0Aconst%20boom%20%3D%20document.getElementById%28%27boom%27%29%3B%0Aconst%20lives%20%3D%20document.getElementById%28%27lives%27%29%3B%0Aconst%20cheers%20%3D%20%5B%27%u062E%u0637%u064A%u0631%27%2C%20%27%u0631%u0627%u0626%u0639%27%2C%20%27%u064A%u0644%u0627%20%u0648%u0627%u0635%u0644%27%5D%3B%0Aconst%20isEnemy%20%3D%20%27%uD83D%uDC7B%27%3B%0Aconst%20noEnemy%20%3D%20%27%uD83D%uDC80%27%3B%0Alet%20enemies%3B%0Alet%20tries%20%3D%203%3B%0Aexport%20let%20enemiesgenerator%3B%0A%0Aexport%20function%20enemiesgeneratorFunction%28enemiesFlow%29%7B%0A%20%20%20%20let%20points%20%3D%200%3B%0A%20%20%20%20soundTruck.play%28%29%3B%0A%20%20%20%20document.getElementById%28%27points%27%29.textContent%20%3D%20%27%u0627%u0644%u0646%u0642%u0627%u0637%200000%27%3B%0A%20%20%20%20if%28%21enemiesgenerator%29%7B%0A%20%20%20%20enemiesgenerator%20%3D%20setInterval%28%28%29%20%3D%3E%20%7B%0A%20%20%20%20const%20random%20%3D%20randomNum%281%2C%20%28window.innerWidth%20-%20120%29/75%29%20*%2075%3B%0A%20%20%20%20const%20newEnemy%20%3D%20document.createElement%28%27div%27%29%3B%0A%20%20%20%20newEnemy.className%20%3D%20%27enemy%27%0A%20%20%20%20newEnemy.textContent%20%3D%20isEnemy%3B%0A%20%20%20%20newEnemy.style.left%20%3D%20random%20+%20%27px%27%3B%0A%20%20%20%20document.getElementById%28%27container%27%29.prepend%28newEnemy%29%3B%0A%20%20%20%20attack%28newEnemy%29%3B%0A%20%20%20%20enemies%20%3D%20Array.from%28document.getElementsByClassName%28%27enemy%27%29%29%3B%0A%20%20%20%20const%20array%20%3D%20Array.from%28enemies%29%3B%0A%20%20%20%20for%28let%20enemy%20of%20array%29%7B%20%0A%20%20%20%20%20%20%20%20%0A%20%20%20%20%20%20%20%20enemy.onclick%20%3D%20%28%29%20%3D%3E%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20boom.currentTime%20%3D%200%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20points++%3B%0A%0A%20%20%20%20%20%20%20%20%20%20%20%20setTimeout%28%28%29%20%3D%3E%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20boom.play%28%29%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20%7D%2C%20200%29%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20setTimeout%28%28%29%20%3D%3E%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20enemy.textContent%20%3D%20noEnemy%3B%20%0A%20%20%20%20%20%20%20%20%20%20%20%20points%20%3D%20points.toString%28%29.padStart%284%2C%270%27%29%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20if%28points%20%25%2010%20%3D%3D%200%29%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20const%20random%20%3D%20randomNum%280%2C%20cheers.length%20-%201%29%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20document.getElementById%28%27points%27%29.textContent%20%3D%20%60%u0627%u0644%u0646%u0642%u0627%u0637%20%24%7Bpoints%7D%20%20%20%24%7Bcheers%5Brandom%5D%7D%60%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20setTimeout%28%28%29%20%3D%3E%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20document.getElementById%28%27points%27%29.textContent%20%3D%20%60%u0627%u0644%u0646%u0642%u0627%u0637%20%24%7Bpoints%7D%60%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7D%2C%201000%29%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20if%28points%20%25%20100%20%3D%3D%200%29%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20document.getElementById%28%27complete%27%29.play%28%29%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%20%20%20%20%20%20%7Delse%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20document.getElementById%28%27points%27%29.textContent%20%3D%20%60%u0627%u0644%u0646%u0642%u0627%u0637%20%24%7Bpoints%7D%60%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%20%20%20%20%20%20%7D%2C%20270%29%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20setTimeout%28%28%29%20%3D%3E%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20boom.pause%28%29%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20%7D%2C%20440%29%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20setTimeout%28%28%29%20%3D%3E%20%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20enemy.remove%28%29%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20%7D%2C%20500%29%3B%0A%20%20%20%20%20%20%20%20%7D%20%20%0A%20%20%20%20%20%20%20%20%0A%20%20%20%20%7D%20%0A%0A%0A%20%20%20%20%20%0A%7D%2C%20enemiesFlow%29%3B%0A%7D%7D%0A%0Afunction%20attack%28enemy%29%7B%0A%20%20%20%20let%20position%20%3D%200%3B%0A%20%20%20%20const%20move%20%3D%20setInterval%28%28%29%20%3D%3E%20%7B%0A%20%20%20%20%20%20%20%20position+%3D13%3B%0A%20%20%20%20%20%20%20%20enemy.style.top%20%3D%20%60%24%7Bposition%7Dpx%60%3B%0A%20%20%20%20%20%20%20%20if%28position%20%3E%3D%20window.innerHeight%29%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20clearInterval%28move%29%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20tries--%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20if%28tries%20%3D%3D%202%29%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20lives.textContent%20%3D%20%27%uD83D%uDC99%uD83D%uDC99%uD83D%uDDA4%27%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7Delse%20if%28tries%20%3D%3D%201%29%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20lives.textContent%20%3D%20%27%uD83D%uDC99%uD83D%uDDA4%uD83D%uDDA4%27%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7Delse%20if%28tries%20%3D%3D%200%29%7B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20lives.textContent%20%3D%20%27%uD83D%uDDA4%uD83D%uDDA4%uD83D%uDDA4%27%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20location.reload%28%29%3B%0A%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%20%20%20%20%7D%0A%20%20%20%20%7D%2C%2090%29%3B%0A%20%20%20%20enemy.addEventListener%28%27click%27%2C%20%28%29%20%3D%3E%20%7BclearInterval%28move%29%3B%7D%29%3B%0A%7D%0A%0A%20'))</script>
+
+// exports {randomNum(min.max), fire(event), aiming(event), enemiesgenerator(enemiesFlow)}
+
+const fail = document.getElementById('fail');
+fail.play();
+
+
+const player = document.getElementById('player');
+const rotator = document.getElementById('rotator');
+const bullet = document.getElementById('bullet');
+const soundTruck = document.getElementById('soundTruck');
+const shoot = document.getElementById('shoot');
+let x = 0;
+let y = 0;
+const noCollide = '🚀';
+const collide = '💥';
+bullet.textContent = noCollide;
+
+// Generate a random number between min - 1 and max + 1
+export function randomNum(min, max) {
+
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}
+
+// Animation of the bullet firing
+export function fire(event){ shoot.play();
+    player.style.left = event.x + 'px';
+    player.style.top = event.y + 'px';
+    player.style.transform = 'translate(-50%, -10%)';
+    player.style.transition = '0.3s';
+    setTimeout(() => {
+    bullet.style.overflow = 'visible';
+    bullet.textContent = collide;
+    }, 270);
+    setTimeout(() => {
+    player.style.transition = '0s';
+    bullet.style.overflow = 'hidden';
+    bullet.textContent = '';
+    player.style.left = '50%';
+    player.style.top = '100%';
+    player.style.transform = 'translate(-50%, -130%)';
+    }, 300);
+    setTimeout(() => {
+        bullet.textContent = noCollide;
+        shoot.pause();
+        shoot.currentTime = 0;
+    }, 500);}
+// Animation of the bullet aiming
+export function aiming(event){
+    const xdis = event.x - window.innerWidth/2;
+    const ydis = window.innerHeight * 95 / 100 - event.y;
+    const degree = (Math.atan(xdis/ydis) * 180 / Math.PI);
+    rotator.style.transform = `rotate(${degree}deg)`;
+}
+
+
+
+
+// Generate enemies
+
+const boom = document.getElementById('boom');
+const lives = document.getElementById('lives');
+const cheers = ['خطير', 'رائع', 'يلا واصل'];
+const isEnemy = '👻';
+const noEnemy = '💀';
+let enemies;
+let tries = 3;
+export let enemiesgenerator;
+
+export function enemiesgeneratorFunction(enemiesFlow){
+    let points = 0;
+    soundTruck.play();
+    document.getElementById('points').textContent = 'النقاط 0000';
+    if(!enemiesgenerator){
+    enemiesgenerator = setInterval(() => {
+    const random = randomNum(1, (window.innerWidth - 120)/75) * 75;
+    const newEnemy = document.createElement('div');
+    newEnemy.className = 'enemy'
+    newEnemy.textContent = isEnemy;
+    newEnemy.style.left = random + 'px';
+    document.getElementById('container').prepend(newEnemy);
+    attack(newEnemy);
+    enemies = Array.from(document.getElementsByClassName('enemy'));
+    const array = Array.from(enemies);
+    for(let enemy of array){ 
+        
+        enemy.onclick = () => {
+            boom.currentTime = 0;
+            points++;
+
+            setTimeout(() => {
+                boom.play();
+            }, 200);
+            setTimeout(() => {
+            enemy.textContent = noEnemy; 
+            points = points.toString().padStart(4,'0');
+               if(points % 10 == 0){
+                const random = randomNum(0, cheers.length - 1);
+                document.getElementById('points').textContent = `النقاط ${points}   ${cheers[random]}`;
+                setTimeout(() => {
+                document.getElementById('points').textContent = `النقاط ${points}`;
+                }, 1000);
+                if(points % 100 == 0){
+                    document.getElementById('complete').play();
+               }
+            }else{
+                 document.getElementById('points').textContent = `النقاط ${points}`;
+            }
+            }, 270);
+            setTimeout(() => {
+            boom.pause();
+            }, 440);
+            setTimeout(() => {
+            enemy.remove();
+            }, 500);
+        }  
+        
+    } 
+
+
+     
+}, enemiesFlow);
+}}
+
+function attack(enemy){
+    let position = 0;
+    const move = setInterval(() => {
+        position+=13;
+        enemy.style.top = `${position}px`;
+        if(position >= window.innerHeight){
+            clearInterval(move)
+                tries--;
+                if(tries == 2){
+                    lives.textContent = '💙💙🖤';
+                }else if(tries == 1){
+                    lives.textContent = '💙🖤🖤';
+                }else if(tries == 0){
+                    lives.textContent = '🖤🖤🖤';
+                    location.reload();
+                }
+        }
+    }, 90);
+    enemy.addEventListener('click', () => {clearInterval(move);});
+}
+
+ 
