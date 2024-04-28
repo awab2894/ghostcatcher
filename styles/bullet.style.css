@@ -1,0 +1,18 @@
+
+#player{
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  font-size: 60px;
+ cursor: default;
+ transform: translate(-50% ,-120%);
+ transition: 0.3s;
+ }
+   #bullet{
+     display: flex;
+     align-items: center;
+     justify-content: center;
+     transform: rotate(-45deg);
+     overflow: hidden;
+     color: rgb(112, 130, 159);
+   }

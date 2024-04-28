@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>صائد الأشباح</title>
+
+        <link rel="stylesheet" href="styles/main.style.css" />
+        <link rel="stylesheet" href="styles/bullet.style.css" />
+        <link rel="stylesheet" href="styles/enemies.style.css" />
+        <link rel="stylesheet" href="styles/panel.style.css" />
+        <link rel="icon" href="favicon.png" />
+        
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta http-equiv="X-UA-Compatible" content="ie-edge" />
+
+    </head>
+    <body>
+        </div>
+        <audio src="sounds/music.mp3" id="soundTruck" loop></audio>
+        <audio src="sounds/shoot.wav" id="shoot"></audio>
+        <audio src="sounds/complete.wav" id="complete"></audio>
+        <audio src="sounds/exiplosion.wav" id="boom"></audio>
+        <audio src="sounds/fail.wav" id="fail"></audio>
+        
+        <div id="container">
+            <div id="player">
+                <div id="rotator">
+                    <div id="bullet"></div> 
+                </div>
+            </div>  
+        </div>
+        
+        <header class="toolsBar"  dir="rtl">
+            <button id="exitBtn" class="btn" onclick="location.reload(); exitBtn.style.display = 'none';">X</button>
+            <pre id="points">اختر مستوى</pre>
+            <p id="lives">💙💙💙</p>
+        </header>
+
+        <div id="panel"  dir="rtl">
+            <h1 class="title">صائد الأشباح</h1>
+            <divm class="controls">
+                <button id="easyBtn" class="btn">سهل</button>
+                <button id="medBtn" class="btn">متوسط</button>
+                <button id="difBtn" class="btn">صعب</button>
+            </div>
+        </div>
+
+        <script type="module" src="scripts/enemies.script.js"></script>
+        <script type="module" src="scripts/main.script.js"></script>
+    
+    </body>
+</html>

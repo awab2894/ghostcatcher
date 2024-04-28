@@ -1,0 +1,14 @@
+.enemy{
+    position: absolute;
+    width: fit-content;
+    height: fit-content;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    margin: 0;
+    font-size: 50px;
+    z-index: 0;
+    transform: translateX(-50%);
+    transition: 0.3s;
+}
