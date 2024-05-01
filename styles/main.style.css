@@ -13,6 +13,13 @@ position: relative;
  height: 100vh;
  background-color: #012;
  cursor: pointer;
+  /*new commit*/
+    user-select: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -webkit-tap-highlight-color: #fff0;
 }
 #container{
   width: 100%;
